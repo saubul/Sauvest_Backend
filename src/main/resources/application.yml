@@ -17,7 +17,7 @@ spring:
   mail:
     host: smtp.yandex.ru
     port: 465
-    username:
+    username: miraxle@yandex.ru
     password: odiakqkqduyrcmpe
     protocol: smtps
   mvc:
@@ -26,4 +26,4 @@ spring:
 mail_server: localhost:4200
 jwt:
   expirationTime: 600000
-  secret:
+  secret: EGh8faj1xrz9IhFzRfw6pgSSQAIPL8hlN7bVNkjyCvqZZeKkAXGgEl9DrlYrXF4O

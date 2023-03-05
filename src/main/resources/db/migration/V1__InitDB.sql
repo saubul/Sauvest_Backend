@@ -10,6 +10,7 @@ create table users (
         password varchar(255),
         surname varchar(255),
         username varchar(255),
+        sso_token varchar(255) not null,
         primary key (id));
 create table users_roles (
        user_id bigint not null,
@@ -40,7 +41,6 @@ alter table if exists verification_tokens
        add constraint user_id_fk 
        foreign key (user_id) 
        references users;
-alter table if exists users  add column img_path varchar(255);
 create table subscriptions (
        id bigint not null,
         subsciprtion_user_id bigint,
@@ -68,6 +68,7 @@ create table posts (
         creation_date_time timestamp(6),
         user_id bigint,
         img_path varchar(255),
+        vote_count bigint default 0,
         primary key (id));
 create sequence comment_id_seq start with 1 increment by 1;
 create sequence post_id_seq start with 1 increment by 1;
@@ -80,6 +81,20 @@ alter table if exists comments
        foreign key (user_id) 
        references users;
 alter table if exists posts 
+       add constraint user_id_fk 
+       foreign key (user_id) 
+       references users;
+create table votes (
+       id bigint not null,
+        post_id bigint,
+        user_id bigint,
+        primary key (id));
+create sequence vote_id_seq start with 1 increment by 1;
+alter table if exists votes 
+       add constraint post_id_fk 
+       foreign key (post_id) 
+       references posts;
+alter table if exists votes 
        add constraint user_id_fk 
        foreign key (user_id) 
        references users;

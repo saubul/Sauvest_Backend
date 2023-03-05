@@ -10,26 +10,19 @@ import sauprojects.sauvest.entity.User;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class UserDTO {
+public class ProfileDTO {
 	
 	private String username;
-	private String password;
 	private String email;
 	private String name;
 	private String surname;
-	public boolean enabled;
-	public String ssoToken;
 
-	public static UserDTO buildUserDTO(User user) {
-		return UserDTO.builder()
+	public static ProfileDTO buildProfileDTO(User user) {
+		return ProfileDTO.builder()
 						  .username(user.getUsername())
-						  .password(user.getPassword())
 						  .email(user.getEmail())
 						  .name(user.getName())
 						  .surname(user.getSurname())
-						  .enabled(user.isEnabled())
-						  .ssoToken(user.getSsoToken())
 					  .build();
 	}
-	
 }

@@ -1,5 +1,6 @@
 package sauprojects.sauvest.entity;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.validation.constraints.Email;
@@ -30,30 +31,34 @@ public class User {
 	
 	@NotBlank(message = "Surname must not be null.")
 	private String surname;
-	
+
+	@Column(nullable = false)
 	@NotBlank(message = "Username must not be null.")
 	private String username;
 	
+	@Column(nullable = false)
 	@NotBlank(message = "Password must not be null.")
 	private String password;
+	
 	
 	@NotBlank(message = "Email must not be null.")
 	@Email
 	private String email;
 	
+	@NotBlank
+	@Column(name = "sso_token", nullable = false)
+	private String ssoToken;
+	
 	@ManyToMany(targetEntity = Role.class, fetch = FetchType.EAGER)
 	@JoinTable(name = "users_roles",
 			   joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "user_id_fk"))},
 			   inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "role_id_fk"))})
-	private Set<Role> roles;
+	private Set<Role> roles = new HashSet<Role>();
 	
 	@NotBlank
 	private boolean enabled;
 	
-	@Column(name = "img_path")
-	private String imgPath;
-	
 	@OneToMany(targetEntity = Subscription.class, mappedBy = "user", fetch = FetchType.LAZY)
-	private Set<Subscription> subscriptions;
+	private Set<Subscription> subscriptions = new HashSet<Subscription>();
 	
 }

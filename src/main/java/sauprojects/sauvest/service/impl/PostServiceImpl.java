@@ -1,5 +1,6 @@
 package sauprojects.sauvest.service.impl;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
@@ -7,6 +8,7 @@ import org.springframework.stereotype.Service;
 import lombok.RequiredArgsConstructor;
 import sauprojects.sauvest.dto.PostDTO;
 import sauprojects.sauvest.entity.Post;
+import sauprojects.sauvest.entity.User;
 import sauprojects.sauvest.repository.PostRepository;
 import sauprojects.sauvest.service.PostService;
 import sauprojects.sauvest.service.UserService;
@@ -26,6 +28,16 @@ public class PostServiceImpl implements PostService{
 		Post post = postOptional.orElseThrow(() -> new RuntimeException(String.format("Post with id '%s' not found.", postId)));
 		
 		return post;
+	}
+	
+	@Override
+	public PostDTO getPostById(Long postId) {
+		return PostDTO.buildPostDTO(this.findPostById(postId));
+	}
+	
+	@Override
+	public List<PostDTO> getAllPosts() {
+		return postRepository.findAll().stream().map(PostDTO::buildPostDTO).toList();
 	}
 
 	@Override
@@ -47,5 +59,17 @@ public class PostServiceImpl implements PostService{
 					   .imgPath(postDTO.getImgPath())
 				   .build();
 	}
+
+	@Override
+	public List<PostDTO> getAllPostsByUsername(String username) {
+		User user = userService.findUserByUsername(username);
+		return postRepository.findByUser(user).stream().map(PostDTO::buildPostDTO).toList();
+	}
 	
+	@Override
+	public void deletePostById(Long postId) {
+		
+		postRepository.deleteById(postId);
+	}
+
 }

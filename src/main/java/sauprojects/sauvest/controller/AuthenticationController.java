@@ -43,7 +43,7 @@ public class AuthenticationController {
 	}
 	
 	@GetMapping("/checkToken")
-	public HttpEntity<Boolean> checkRefreshToken(@RequestParam("token") String token) {
+	public HttpEntity<Boolean> checkToken(@RequestParam("token") String token) {
 		return new ResponseEntity<Boolean>(authenticationService.checkToken(token), HttpStatus.OK);
 	}
 	

@@ -1,8 +1,11 @@
 package sauprojects.sauvest.service;
 
 
+import java.util.List;
+
 import org.springframework.security.core.userdetails.UserDetailsService;
 
+import sauprojects.sauvest.dto.ProfileDTO;
 import sauprojects.sauvest.dto.UserDTO;
 import sauprojects.sauvest.entity.User;
 
@@ -19,6 +22,10 @@ public interface UserService extends UserDetailsService {
 	void enableUser(User user);
 	
 	User buildUser(UserDTO userDTO);
+	
+	List<UserDTO> getAllUsersBySubscriptionUserId(Long userId);
+	
+	List<ProfileDTO> getAllUsersBySurnameStartsWith(String string);
 
-	String saveUserImg(String username, String filename);
+	UserDTO updateUser(UserDTO userDTO);
 }

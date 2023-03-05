@@ -1,5 +1,6 @@
 package sauprojects.sauvest.service.impl;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
@@ -27,6 +28,11 @@ public class CommentServiceImpl implements CommentService{
 		Comment comment = commentOptional.orElseThrow(() -> new RuntimeException(String.format("Comment with id '%s' not found.", commentId)));
 		
 		return comment;
+	}
+	
+	@Override
+	public List<CommentDTO> getAllCommentsByPost(Long postId) {
+		return commentRepository.findAllByPostId(postId).stream().map(CommentDTO::buildCommentDTO).toList();
 	}
 
 	@Override

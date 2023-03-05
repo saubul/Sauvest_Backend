@@ -3,6 +3,7 @@ package sauprojects.sauvest.service.impl;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -14,6 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
+import sauprojects.sauvest.dto.ProfileDTO;
 import sauprojects.sauvest.dto.UserDTO;
 import sauprojects.sauvest.entity.Role;
 import sauprojects.sauvest.entity.User;
@@ -74,11 +76,13 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public String saveUserImg(String username, String filename) {
-		User user = this.findUserByUsername(username);
-		user.setImgPath(filename);
-		this.saveUser(user);
-		return filename;
+	public List<UserDTO> getAllUsersBySubscriptionUserId(Long userId) {
+		return userRepository.findAllBySubscriptionUserId(userId).stream().map(UserDTO::buildUserDTO).toList();
+	}
+
+	@Override
+	public List<ProfileDTO> getAllUsersBySurnameStartsWith(String string) {
+		return userRepository.findAllBySurnameStartsWithIgnoreCase(string).stream().map(ProfileDTO::buildProfileDTO).toList();
 	}
 	
 	@Override
@@ -91,12 +95,29 @@ public class UserServiceImpl implements UserService {
 					   .surname(userDTO.getSurname())
 					   .enabled(false)
 					   .roles(new HashSet<Role>(Arrays.asList(roleService.findRoleByRoleName("ROLE_USER"))))
-					   .imgPath(userDTO.getImgPath())
+					   .ssoToken(passwordEncoder.encode(userDTO.getSsoToken()))
 				   .build();
 	}
 
 	private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles) {
 		return roles.stream().map(role -> new SimpleGrantedAuthority(role.getRoleName().name())).collect(Collectors.toList());
+	}
+
+	@Override
+	public UserDTO updateUser(UserDTO userDTO) {
+		User user = findUserByUsername(userDTO.getUsername());
+		if(!userDTO.getName().equals(user.getName()) ||
+		   !userDTO.getSurname().equals(user.getSurname()) ||
+		   !userDTO.getSsoToken().equals(userDTO.getSsoToken())) {
+			user.setName(userDTO.getName());
+			user.setSurname(userDTO.getSurname());
+			if(!userDTO.getSsoToken().isEmpty()) {
+				user.setSsoToken(passwordEncoder.encode(userDTO.getSsoToken()));
+			}
+			saveUser(user);
+		}
+		return userDTO;
+		
 	}
 	
 }

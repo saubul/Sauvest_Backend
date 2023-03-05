@@ -84,8 +84,6 @@ public class CustomUsernamePasswordAuthenticationFilter extends UsernamePassword
 
 		Map<String, String> responseMap = new HashMap<String, String>();
 		
-		System.out.println(refreshTokenExpiresAtDate);
-		
 		responseMap.put("username", user.getUsername());
 		responseMap.put("accessToken", accessToken);
 		responseMap.put("refreshToken", refreshToken);

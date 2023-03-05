@@ -3,6 +3,8 @@ package sauprojects.sauvest.entity;
 
 import java.time.LocalDate;
 
+import javax.validation.constraints.NotBlank;
+
 import jakarta.persistence.*;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -25,6 +27,7 @@ public class VerificationToken {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "verification_token_id_seq")
 	private Long id;
 	
+	@NotBlank
 	private String token;
 	
 	@OneToOne(fetch = FetchType.LAZY)

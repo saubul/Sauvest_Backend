@@ -25,7 +25,7 @@ public class Post {
 	private Long id;
 	
 	@ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY)
-	@JoinColumn(name = "user_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "user_id_fk"))
+	@JoinColumn(name = "user_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "user_id_fk"), nullable = false)
 	private User user;
 	
 	@Column(length = 500)
@@ -38,7 +38,13 @@ public class Post {
 	@Column(name = "img_path")
 	private String imgPath;
 	
+	@Column(name = "vote_count", columnDefinition = "bigint default 0")
+	private int voteCount;
+	
 	@OneToMany(targetEntity = Comment.class, mappedBy = "post")
 	private Collection<Comment> comments;
+	
+	@OneToMany(targetEntity = Vote.class, mappedBy = "post")
+	private Collection<Vote> votes;
 	
 }

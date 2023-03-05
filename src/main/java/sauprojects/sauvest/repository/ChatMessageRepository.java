@@ -5,12 +5,11 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import sauprojects.sauvest.entity.Post;
-import sauprojects.sauvest.entity.User;
+import sauprojects.sauvest.entity.ChatMessage;
 
 @Repository
-public interface PostRepository extends JpaRepository<Post, Long>{
+public interface ChatMessageRepository extends JpaRepository<ChatMessage, Long>{
 	
-	List<Post> findByUser(User user);
+	List<ChatMessage> findAllByChatId(Long chatId);
 	
 }

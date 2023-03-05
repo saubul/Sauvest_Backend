@@ -51,6 +51,7 @@ public class WebSecurityConfiguration {
 			.addFilter(new CustomUsernamePasswordAuthenticationFilter(this.authenticationManager(), jwtExpirationTime, secret))
 			.addFilterBefore(new JWTAuthenticationFilter(secret), UsernamePasswordAuthenticationFilter.class)
 			.authorizeHttpRequests(auth -> auth.requestMatchers("/api/auth/**",
+																"/api/post/getAll",
 																"/error",
 																"/v2/api-docs",
 																"/configuration/ui",

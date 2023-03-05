@@ -12,13 +12,13 @@ import lombok.Data;
 @Builder
 public class SubscriptionDTO {
 	
-	private Long userId;
-	private Long subscriptionUserId;
+	private String username;
+	private String subUsername;
 	
 	public static SubscriptionDTO buildSubscriptionDTO(Subscription subscription) {
 		return SubscriptionDTO.builder()
-								  .userId(subscription.getUser().getId())
-								  .subscriptionUserId(subscription.getSubscriptionUser().getId())
+								  .username(subscription.getUser().getUsername())
+								  .subUsername(subscription.getSubscriptionUser().getUsername())
 							  .build();
 	}
 	
