@@ -95,7 +95,7 @@ public class UserServiceImpl implements UserService {
 					   .surname(userDTO.getSurname())
 					   .enabled(false)
 					   .roles(new HashSet<Role>(Arrays.asList(roleService.findRoleByRoleName("ROLE_USER"))))
-					   .ssoToken(passwordEncoder.encode(userDTO.getSsoToken()))
+					   .ssoToken(userDTO.getSsoToken())
 				   .build();
 	}
 
@@ -108,11 +108,11 @@ public class UserServiceImpl implements UserService {
 		User user = findUserByUsername(userDTO.getUsername());
 		if(!userDTO.getName().equals(user.getName()) ||
 		   !userDTO.getSurname().equals(user.getSurname()) ||
-		   !userDTO.getSsoToken().equals(userDTO.getSsoToken())) {
+		   !userDTO.getSsoToken().equals(user.getSsoToken())) {
 			user.setName(userDTO.getName());
 			user.setSurname(userDTO.getSurname());
 			if(!userDTO.getSsoToken().isEmpty()) {
-				user.setSsoToken(passwordEncoder.encode(userDTO.getSsoToken()));
+				user.setSsoToken(userDTO.getSsoToken());
 			}
 			saveUser(user);
 		}

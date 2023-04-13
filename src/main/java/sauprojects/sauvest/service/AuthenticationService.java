@@ -13,4 +13,6 @@ public interface AuthenticationService {
 	void verifyAccount(String token);
 
 	Boolean checkToken(String token);
+
+	Boolean checkEnabled(String username);
 }

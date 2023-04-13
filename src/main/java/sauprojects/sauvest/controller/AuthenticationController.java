@@ -47,4 +47,8 @@ public class AuthenticationController {
 		return new ResponseEntity<Boolean>(authenticationService.checkToken(token), HttpStatus.OK);
 	}
 	
+	@GetMapping("/checkEnabled")
+	public HttpEntity<Boolean> checkEnabled(@RequestParam("username") String username) {
+		return new ResponseEntity<Boolean>(authenticationService.checkEnabled(username), HttpStatus.OK);
+	}
 }

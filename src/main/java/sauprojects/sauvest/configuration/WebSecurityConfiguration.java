@@ -52,6 +52,7 @@ public class WebSecurityConfiguration {
 			.addFilterBefore(new JWTAuthenticationFilter(secret), UsernamePasswordAuthenticationFilter.class)
 			.authorizeHttpRequests(auth -> auth.requestMatchers("/api/auth/**",
 																"/api/post/getAll",
+																"/api/marketdata/**",
 																"/error",
 																"/v2/api-docs",
 																"/configuration/ui",
@@ -80,9 +81,9 @@ public class WebSecurityConfiguration {
 	public CorsConfigurationSource corsConfigurationSource() {
 		CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(Arrays.asList("http://localhost:4200", "http://localhost:4200/"));
-        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
-        configuration.setAllowedHeaders(Arrays.asList("authorization", "content-type", "x-auth-token", "content-length"));
-        configuration.setExposedHeaders(Arrays.asList("x-auth-token"));
+        configuration.setAllowedMethods(Arrays.asList("*"));
+        configuration.setAllowedHeaders(Arrays.asList("*"));
+        configuration.setExposedHeaders(Arrays.asList("*"));
         configuration.setAllowCredentials(true);
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);

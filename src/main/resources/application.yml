@@ -17,8 +17,6 @@ spring:
   mail:
     host: smtp.yandex.ru
     port: 465
-    username: miraxle@yandex.ru
-    password: odiakqkqduyrcmpe
     protocol: smtps
   mvc:
     pathmatch:

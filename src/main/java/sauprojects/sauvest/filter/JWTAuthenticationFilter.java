@@ -33,7 +33,8 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter{
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
 		if(request.getServletPath().contains("/api/auth/") ||
-		   request.getServletPath().contains("/ws")) {
+		   request.getServletPath().contains("/ws") ||
+		   request.getServletPath().contains("/api/marketdata/")) {
 			doFilter(request, response, filterChain);
 		} else {
 			String authorizationHeader = request.getHeader(HttpHeaders.AUTHORIZATION);

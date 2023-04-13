@@ -49,7 +49,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 	@Override
 	public void refreshToken(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String authorizationHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
-		System.out.println(authorizationHeader);
 		if(authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
 			try {
 				String refreshToken = authorizationHeader.substring("Bearer ".length());
@@ -128,6 +127,12 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 			return false;
 		}
 		return true;
+	}
+
+	@Override
+	public Boolean checkEnabled(String username) {
+		
+		return userService.findUserByUsername(username).isEnabled();
 	}
 
 }
